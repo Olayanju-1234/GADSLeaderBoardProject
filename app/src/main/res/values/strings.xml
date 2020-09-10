@@ -14,4 +14,10 @@
     <string name="last_name">Last Name</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="submission_unsuccessful">Submission UnSuccessful</string>
+    <string name="image">Image</string>
+    <string name="are_you_sure">Are you sure</string>
+    <string name="yes">Yes</string>
+    <string name="submission_successful">Submission Successful</string>
+    <string name="project_submission">Project Submission</string>
 </resources>

@@ -2,13 +2,14 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="281dp"
+        android:layout_width="315dp"
+        android:layout_height="193dp"
+        android:layout_margin="40dp"
+        android:padding="8dp"
         app:cardCornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,37 +22,38 @@
 
             <ImageView
                 android:id="@+id/unconfirmImage"
-                android:layout_width="189dp"
-                android:layout_height="149dp"
+                android:layout_width="114dp"
+                android:layout_height="73dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="115dp"
-                android:layout_marginTop="29dp"
-                android:layout_marginEnd="107dp"
-                android:layout_marginBottom="103dp"
+                android:layout_marginStart="101dp"
+                android:layout_marginTop="44dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="76dp"
                 android:background="@android:color/holo_red_dark"
-                app:srcCompat="@drawable/error" />
+                app:srcCompat="@drawable/error"
+                android:contentDescription="@string/image" />
 
             <TextView
                 android:id="@+id/unconfirmText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="304dp"
+                android:layout_height="38dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="192dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="130dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginBottom="25dp"
                 android:fontFamily="@font/archivo_black"
                 android:padding="10dp"
-                android:text="Submission UnSuccessful"
+                android:text="@string/submission_unsuccessful"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

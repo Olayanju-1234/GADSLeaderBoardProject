@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +40,8 @@ public class TopSkillAdapter extends RecyclerView.Adapter<TopSkillAdapter.ViewHo
         holder.skillscore.setText(MessageFormat.format("{0} Skill IQ Score, {1}", topSkillList.get(position).getScore(), topSkillList.get(position).getCountry()));
         Picasso.get().load(topSkillList.get(position).getBadgeUrl()).into(holder.skillimage);
     }
+    
+    
 
     @Override
     public int getItemCount() {

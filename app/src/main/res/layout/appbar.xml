@@ -2,7 +2,7 @@
 
 
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/myToolBar"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
@@ -39,7 +39,8 @@
             android:text="@string/submit"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
 
     </RelativeLayout>
 
