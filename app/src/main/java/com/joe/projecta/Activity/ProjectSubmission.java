@@ -38,7 +38,7 @@ public class ProjectSubmission extends AppCompatActivity {
     private EditText firstname,lastname,emailaddresss,linkgithub;
 
     private static Retrofit.Builder reBuilder = new Retrofit.Builder()
-            .baseUrl(" https://docs.google.com/forms/d/e/")
+            .baseUrl("https://docs.google.com/forms/d/e/")
             .addConverterFactory(GsonConverterFactory.create());
 
     public static Retrofit retrofit = reBuilder.build();
@@ -118,11 +118,6 @@ public class ProjectSubmission extends AppCompatActivity {
                 executeSendFeedback(firstName, lastName, email, projectLink);
 
             }
-
-
-
-
-
         });
 
     }
@@ -139,13 +134,23 @@ public class ProjectSubmission extends AppCompatActivity {
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                Toast.makeText(ProjectSubmission.this, "Success", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                View view2 = getLayoutInflater().inflate(R.layout.succesfulsubmissiom, null);
+                confirmImage = view2.findViewById(R.id.confirmImage);
+                confirmText = view2.findViewById(R.id.confirmText);
+                builder.setView(view2);
+                alertDialog = builder.create();
+                alertDialog.show();
             }
 
             @Override
-            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                Toast.makeText(ProjectSubmission.this, "Error", Toast.LENGTH_SHORT).show();
+            public void onFailure(@NotNull Call<ResponseBody> call, Throwable t) {
+                View view3 = getLayoutInflater().inflate(R.layout.unsuccsefulsubmission, null);
+                unconfirmImage = view3.findViewById(R.id.unconfirmImage);
+                unconfirmText = view3.findViewById(R.id.unconfirmText);
+                builder.setView(view3);
+                alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }
