@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.joe.projecta.R;
-import com.joe.projecta.retrofit.RetrofitClient;
+import com.joe.projecta.retrofit.Client;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +25,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProjectSubmission extends AppCompatActivity {
     private ImageButton returnButton, cancelSubmission;
@@ -34,6 +36,13 @@ public class ProjectSubmission extends AppCompatActivity {
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
     private EditText firstname,lastname,emailaddresss,linkgithub;
+
+    private static Retrofit.Builder reBuilder = new Retrofit.Builder()
+            .baseUrl(" https://docs.google.com/forms/d/e/")
+            .addConverterFactory(GsonConverterFactory.create());
+
+    public static Retrofit retrofit = reBuilder.build();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +83,6 @@ public class ProjectSubmission extends AppCompatActivity {
 
     }
 
-
-
-
     public void createPopDialog() {
         builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.confirmcard, null);
@@ -86,7 +92,6 @@ public class ProjectSubmission extends AppCompatActivity {
         questionMark = view.findViewById(R.id.questionMark);
         textConfirmation = view.findViewById(R.id.textConfirmation);
         submitConfirmation = view.findViewById(R.id.confirmationButton);
-
 
         builder.setView(view);
         alertDialog = builder.create();
@@ -100,57 +105,49 @@ public class ProjectSubmission extends AppCompatActivity {
             }
         });
 
-        firstname = findViewById(R.id.firstname);
-        lastname = findViewById(R.id.lastname);
-        emailaddresss = findViewById(R.id.emailaddress);
-        linkgithub = findViewById(R.id.linkgithub);
 
         submitConfirmation.setOnClickListener(new View.OnClickListener() {
 
-            String email = emailaddresss.getText().toString().trim();
-            String firstName = firstname.getText().toString().trim();
-            String lastName = lastname.getText().toString().trim();
-            String projectLink = linkgithub.getText().toString().trim();
-
             @Override
             public void onClick(View view) {
-                Call<ResponseBody> call = RetrofitClient
-                        .getInstance()
-                        .mSubmitService()
-                        .createUser(email, firstName, lastName, projectLink);
+                String email = emailaddresss.getText().toString().trim();
+                String firstName = firstname.getText().toString().trim();
+                String lastName = lastname.getText().toString().trim();
+                String projectLink = linkgithub.getText().toString().trim();
 
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                        try {
-                            assert response.body() != null;
-                            String t = response.body().string();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        View view1 = getLayoutInflater().inflate(R.layout.succesfulsubmissiom, null);
-                        confirmImage = view1.findViewById(R.id.confirmImage);
-                        confirmText = view1.findViewById(R.id.confirmText);
+                executeSendFeedback(firstName, lastName, email, projectLink);
 
-                        builder.setView(view1);
-                        alertDialog = builder.create();
-                        alertDialog.show();
-                    }
-
-                    @Override
-                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                        View view2 = getLayoutInflater().inflate(R.layout.unsuccsefulsubmission, null);
-                        unconfirmImage = view2.findViewById(R.id.unconfirmImage);
-                        unconfirmText = view2.findViewById(R.id.unconfirmText);
-
-                        builder.setView(view2);
-                        alertDialog = builder.create();
-                        alertDialog.show();
-                     }
-                });
             }
+
+
+
+
+
         });
 
+    }
+
+    private void executeSendFeedback(String firstName, String lastName, String email, String linkGitHub){
+        Client client = retrofit.create(Client.class);
+
+        Call<ResponseBody> call = client.sendFeedback(
+                firstName,
+                lastName,
+                email,
+                linkGitHub
+        );
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                Toast.makeText(ProjectSubmission.this, "Success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                Toast.makeText(ProjectSubmission.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
